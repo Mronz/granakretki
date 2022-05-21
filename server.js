@@ -2,6 +2,7 @@
 var express = require("express")
 var app = express()
 const PORT = 3000;
+app.use(express.static('static'))
 app.use(express.json())
 app.use(express.text())
 
