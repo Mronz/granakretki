@@ -53,7 +53,7 @@ class Ui {
         // txt.innerHTML = "Grasz jako " + game.username;
         // lobbyWindow.append(txt);
 
-        txt = document.createElement("div");
+        let txt = document.createElement("div");
         txt.innerHTML = "Pokoje";
         lobbyWindow.append(txt);
 
