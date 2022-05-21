@@ -1,4 +1,4 @@
 # granakretki
 gra nakretki
- seima kamil to ciapak
+seima kamil to ciapak
 eloelo
