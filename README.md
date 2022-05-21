@@ -1,2 +1,3 @@
 # granakretki
 gra nakretki
+ seima
