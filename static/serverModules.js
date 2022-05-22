@@ -1,5 +1,5 @@
-module.exports = {
-    room1: {
+module.exports = [
+    {
         player1: null,
         player2: null,
         board: [
@@ -10,7 +10,7 @@ module.exports = {
             [0, 0, 0, 0, 0]
         ]
     },
-    room2: {
+    {
         player1: null,
         player2: null,
         board: [
@@ -21,7 +21,7 @@ module.exports = {
             [0, 0, 0, 0, 0]
         ]
     },
-    room3: {
+    {
         player1: null,
         player2: null,
         board: [
@@ -32,4 +32,4 @@ module.exports = {
             [0, 0, 0, 0, 0]
         ]
     },
-}
+]

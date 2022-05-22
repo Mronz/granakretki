@@ -5,7 +5,7 @@ class Net {
         };
         fetch("/GET_ROOMS", options)
             .then(response => response.json()) // konwersja na json
-            .then(data => console.log(data)) // dane odpowiedzi z serwera
+            .then(data => ui.lobby(data)) // dane odpowiedzi z serwera
             .catch(error => console.log(error));
 
     }

@@ -33,7 +33,6 @@ class Ui {
         inp.id = "send";
         inp.value = "Dalej";
         inp.onclick = () => {
-            this.lobby()
             //game.username = document.getElementById("nick");
             net.getRooms();
         }
@@ -43,40 +42,58 @@ class Ui {
     }
 
 
-    lobby() {
+    lobby(data) {
+
         if (document.getElementById("loginWindow")) document.getElementById("loginWindow").remove();
         let lobbyWindow = document.createElement("div");
         lobbyWindow.id = "loginWindow";
         lobbyWindow.style.width = "300px";
         lobbyWindow.style.height = "300px";
 
-        // let txt = document.createElement("div");
-        // txt.innerHTML = "Grasz jako " + game.username;
-        // lobbyWindow.append(txt);
-
         let txt = document.createElement("div");
         txt.innerHTML = "Pokoje";
         lobbyWindow.append(txt);
-
-
+        console.log(data);
         let table = document.createElement("table");
         let tr = document.createElement("tr");
-        let td = document.createElement("td");
-        td.innerHTML = "room#1";
-        tr.appendChild(td);
-        td = document.createElement("td");
-        td.innerHTML = "user1"; // uzytkownik1 w pokoju
-        tr.appendChild(td);
-        td = document.createElement("td");
-        td.innerHTML = "user2"; // uzytkownik2 w pokoju
-        tr.appendChild(td);
-        td = document.createElement("td");
-        let bt = document.createElement("button");
-        bt.innerText = "Dołącz";
-        td.appendChild(bt);
-        tr.appendChild(td);
+        let th = document.createElement("th");
+        th.innerHTML = "nr pokoju";
+        tr.appendChild(th);
+        th = document.createElement("th");
+        th.innerHTML = "gracz 1";
+        tr.appendChild(th);
+        th = document.createElement("th");
+        th.innerHTML = "gracz 2";
+        tr.appendChild(th);
+        th = document.createElement("th");
+        th.innerHTML = "dołączanie";
+        tr.appendChild(th);
         table.appendChild(tr)
 
+        for (let i = 0; i < data.length; i++) {
+            let room = data[i];
+            console.log(room);
+            let tr = document.createElement("tr");
+            let td = document.createElement("td");
+            td.innerHTML = "room#" + i;
+            tr.appendChild(td);
+            td = document.createElement("td");
+            // uzytkownik1 w pokoju
+            if (room.player1 == null) td.innerHTML = "-";
+            else td.innerHTML = room.player1;
+            tr.appendChild(td);
+            td = document.createElement("td");
+            // uzytkownik2 w pokoju
+            if (room.player2 == null) td.innerHTML = "-";
+            else td.innerHTML = room.player2;
+            tr.appendChild(td);
+            td = document.createElement("td");
+            let bt = document.createElement("button");
+            bt.innerText = "Dołącz";
+            td.appendChild(bt);
+            tr.appendChild(td);
+            table.appendChild(tr)
+        }
         lobbyWindow.append(table);
 
         document.getElementById("root").append(lobbyWindow);

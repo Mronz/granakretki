@@ -10,10 +10,11 @@ app.use(express.text())
 
 
 app.post("/GET_ROOMS", (req, res) => {
-    console.log(lobby);
-    req.on("end", function (lobby) {
+
+    req.on("data", function (data) { console.log(lobby) })
+    req.on("end", function (data) {
         res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
-        res.end(JSON.stringify(users, null, 5));
+        res.end(JSON.stringify(lobby, null, 5));
     })
 })
 
