@@ -35,6 +35,7 @@ class Ui {
         inp.onclick = () => {
             this.lobby()
             //game.username = document.getElementById("nick");
+            net.getRooms();
         }
         loginWindow.append(inp);
 
