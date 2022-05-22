@@ -45,9 +45,8 @@ class Ui {
         document.getElementById("root").append(loginWindow);
     }
 
-
+    // generwoanie looby
     lobby(data) {
-
         if (document.getElementById("loginWindow")) document.getElementById("loginWindow").remove();
         let lobbyWindow = document.createElement("div");
         lobbyWindow.id = "loginWindow";
@@ -104,8 +103,7 @@ class Ui {
 
         document.getElementById("root").append(lobbyWindow);
     }
-
-
+    // wchodzenie do pokoju
     entering(data) {
         if (data.status == 'entered') {
             game.player = data.player;
@@ -115,11 +113,13 @@ class Ui {
         }
     }
 
+    // zmiana statusu
     changeStatus(info) {
         let status = document.getElementById('status')
         status.innerHTML = "Status <br>" + info;
     }
 
+    // zmiana okna
     resize() {
         window.onresize = () => {
             console.log("resize");

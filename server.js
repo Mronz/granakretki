@@ -3,10 +3,6 @@ let lobby = require("./static/serverModules")
 let app = express()
 const PORT = 3000;
 app.use(express.static('static'))
-// app.use(express.json())
-// app.use(express.text())
-
-
 
 app.post("/GET_ROOMS", (req, res) => {
     req.on("data", function (data) { console.log(lobby) })
@@ -41,6 +37,7 @@ app.post("/ENTER_ROOM", (req, res) => {
         res.end(JSON.stringify(answear, null, 5));
     })
 })
+
 app.post("/ASK", (req, res) => {
     let answear;
     req.on("data", function (data) {
