@@ -32,12 +32,16 @@ class Ui {
         inp.setAttribute("type", "submit");
         inp.id = "send";
         inp.value = "Dalej";
-        inp.onclick = () => {
-            //game.username = document.getElementById("nick");
-            net.getRooms();
+        inp.onclick = async () => {
+            game.username = document.getElementById("nick").value;
+
+            while (true) {
+                await net.getRooms();
+                await new Promise(r => setTimeout(r, 500));
+                if (game.roomNumber != null) break;
+            }
         }
         loginWindow.append(inp);
-
         document.getElementById("root").append(loginWindow);
     }
 
@@ -53,7 +57,6 @@ class Ui {
         let txt = document.createElement("div");
         txt.innerHTML = "Pokoje";
         lobbyWindow.append(txt);
-        console.log(data);
         let table = document.createElement("table");
         let tr = document.createElement("tr");
         let th = document.createElement("th");
@@ -72,7 +75,6 @@ class Ui {
 
         for (let i = 0; i < data.length; i++) {
             let room = data[i];
-            console.log(room);
             let tr = document.createElement("tr");
             let td = document.createElement("td");
             td.innerHTML = "room#" + i;
@@ -89,7 +91,11 @@ class Ui {
             tr.appendChild(td);
             td = document.createElement("td");
             let bt = document.createElement("button");
+            bt.onclick = () => {
+                net.enterRoom(i, game.username)
+            }
             bt.innerText = "Dołącz";
+            // bt.id = i;
             td.appendChild(bt);
             tr.appendChild(td);
             table.appendChild(tr)
@@ -100,7 +106,19 @@ class Ui {
     }
 
 
+    entering(data) {
+        if (data.status == 'entered') {
+            game.player = data.player;
+            game.roomNumber = data.room;
+            if (document.getElementById("loginWindow")) document.getElementById("loginWindow").remove();
+            net.asking()
+        }
+    }
 
+    changeStatus(info) {
+        let status = document.getElementById('status')
+        status.innerHTML = "Status <br>" + info;
+    }
 
     resize() {
         window.onresize = () => {

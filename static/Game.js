@@ -18,5 +18,7 @@ class Game {
         // zmienne uzytkownika i planszy
         this.username;
         this.board;
+        this.roomNumber = null;
+        this.player;
     }
 }
