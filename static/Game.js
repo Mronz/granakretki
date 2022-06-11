@@ -20,5 +20,14 @@ class Game {
         this.board;
         this.roomNumber = null;
         this.player;
+
+        this.render() // wywołanie metody render
+    }
+    render = () => { // render
+        TWEEN.update();
+        console.log("RENDER LECI")
+        requestAnimationFrame(this.render);
+        this.renderer.render(this.scene, this.camera);
+
     }
 }
