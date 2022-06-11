@@ -15,6 +15,8 @@ class Game {
         this.renderer.domElement.id = "main";
         document.getElementById("root").append(this.renderer.domElement);
 
+        this.renderer.setClearColor(0x888888); // kolor do ustawiania
+        this.renderer.setSize(window.innerWidth, window.innerHeight); // skalowanie z rozmiarem okna
         // zmienne uzytkownika i planszy
         this.username;
         this.board;
