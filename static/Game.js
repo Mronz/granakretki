@@ -25,6 +25,13 @@ class Game {
 
         this.render() // wywołanie metody render
     }
+    
+    cameraScale = () => { // Ustawienie kamery na środku, mimo zmniejszenia/powiększenia okna
+        game.camera.aspect = window.innerWidth / window.innerHeight;
+        game.camera.updateProjectionMatrix();
+        game.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
     render = () => { // render
         TWEEN.update();
         console.log("RENDER LECI")

@@ -4,6 +4,13 @@ class Ui {
         this.status()
         this.nickInput()
         //this.resize();
+        this.cameraScale();
+    }
+    //Ustawianie kamery w zależności od rozmiaru okna
+    cameraScale() {
+        window.onresize = function () {
+            game.cameraScale()
+        }
     }
     //pasek statusu
     status() {
