@@ -2,7 +2,7 @@
 class Board extends THREE.Mesh {
     constructor() {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
-
+        
         const geometry = new THREE.BoxGeometry(1500, 5, 1500);
 
         var material = new THREE.MeshBasicMaterial({

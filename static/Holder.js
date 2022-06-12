@@ -3,7 +3,7 @@ class Holder extends THREE.Mesh {
     constructor() {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
 
-        const geometry = new THREE.BoxGeometry(2000, 10, 2000);
+        const geometry = new THREE.BoxGeometry(2300, 10, 2300);
 
         var material = new THREE.MeshBasicMaterial({
             side: THREE.DoubleSide, // dwustronny

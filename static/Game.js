@@ -26,13 +26,36 @@ class Game {
         this.holder = new Holder
         this.scene.add(this.holder) // Dodanie podstawki
         this.board = new Board
-        this.board.position.set(200, 5, 200)
+        this.board.position.set(200, 16, 200)
         this.scene.add(this.board) // Dodanie planszy - papier
 
-        this.x = 1
-        this.y = 1800
 
-        //  this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
+        this.pos_z = -1000 // pomocnicze do dodania bloków
+        this.pos_x = 800
+        for (let i = 1; i <= 9; i++) { // Utworzenie bloków obok planszy
+            this.winfield = new WinField(i, 10)
+            if (i % 2) {
+                this.winfield.position.set(this.pos_x, 16, this.pos_z)
+                this.pos_z = this.pos_z + 300
+            } else {
+                this.winfield.position.set(this.pos_x, 16, this.pos_z)
+                this.pos_x = this.pos_x - 300
+            }
+
+            if (this.pos_z == -400) {
+                this.pos_z = -1000
+            }
+            this.scene.add(this.winfield)
+        }
+
+        this.titlePage = new WinField(0, 0)
+        this.titlePage.position.set(-400, 16, -700)
+        this.scene.add(this.titlePage)
+
+
+        this.x = 1 // Zmienne pomocnicze do animacji kamery
+        this.y = 1800
+        this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
         this.render() // wywołanie metody render
     }
 
