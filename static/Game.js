@@ -8,8 +8,8 @@ class Game {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         const axes = new THREE.AxesHelper(1000)
         this.scene.add(axes)
-
-        this.camera.position.set(1500, 1500, 0)
+        this.camera.position.set(1500, 1500, 1500)
+        // this.camera.position.set(1500, 1500, 0)
         this.camera.lookAt(this.scene.position)
         this.raycaster = new THREE.Raycaster();
         this.mouseVector = new THREE.Vector2();
@@ -25,14 +25,18 @@ class Game {
         this.player;
         this.holder = new Holder
         this.scene.add(this.holder) // Dodanie podstawki
+        this.board = new Board
+        this.board.position.set(200, 5, 200)
+        this.scene.add(this.board) // Dodanie planszy - papier
+
         this.x = 1
         this.y = 1800
-        this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
+
+        //  this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
         this.render() // wywołanie metody render
     }
 
-    cameraAnimationInLobby = (camera) => {
-
+    cameraAnimationInLobby = (camera) => { // Obracanie w elipsie
         let kat = game.x * (Math.PI / 180);
         let x = game.y * Math.cos(kat)
         let y = 1800 * Math.sin(kat)
@@ -43,7 +47,6 @@ class Game {
             game.y = 1800
         }
         game.y--
-        console.log(game.y)
 
     }
 
