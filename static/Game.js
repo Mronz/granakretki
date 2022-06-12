@@ -26,22 +26,24 @@ class Game {
         this.holder = new Holder
         this.scene.add(this.holder) // Dodanie podstawki
         this.x = 1
-
+        this.y = 1800
         this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
         this.render() // wywołanie metody render
     }
 
     cameraAnimationInLobby = (camera) => {
 
-
         let kat = game.x * (Math.PI / 180);
-        let x = 1500 * Math.cos(kat)
-        let y = 1500 * Math.sin(kat)
-        camera.position.set(x, 1500, y)
+        let x = game.y * Math.cos(kat)
+        let y = 1800 * Math.sin(kat)
+        camera.position.set(x, 1800, y)
         camera.lookAt(this.scene.position)
         game.x++
-
-
+        if (game.y == -1800) {
+            game.y = 1800
+        }
+        game.y--
+        console.log(game.y)
 
     }
 
