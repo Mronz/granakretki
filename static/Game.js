@@ -48,10 +48,17 @@ class Game {
             this.scene.add(this.winfield)
         }
 
-        this.titlePage = new WinField(0, 0)
+        this.titlePage = new WinField(0, 0) // Ustawienie Dodatkowego bloka graficznego
         this.titlePage.position.set(-400, 16, -700)
         this.scene.add(this.titlePage)
 
+        this.pawn = new Pawn("orange")
+        this.pawn.position.set(-400, 20, -400)
+        this.scene.add(this.pawn)
+
+        for (let i = 0; i < 8; i++) {
+            
+        }
 
         this.x = 1 // Zmienne pomocnicze do animacji kamery
         this.y = 1800
