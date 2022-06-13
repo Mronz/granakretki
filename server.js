@@ -53,6 +53,28 @@ app.post("/ASK", (req, res) => {
         res.end(JSON.stringify(answear, null, 5));
     })
 })
+app.post("/RESET_ROOM", (req, res) => {
+    req.on("data", function (data) {
+        data = JSON.parse(data)
+        let room = lobby[data.roomNumber];
+        room.player1 = null
+        room.player2 = null
+        room.board = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ]
+        room.turn = 1
+        console.log("Reset pokoju: " + data.roomNumber);
+    })
+    req.on("end", function (data) {
+        res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
+        res.end(JSON.stringify("OK", null, 5));
+    })
+})
+
 
 app.post("/UPDATE", (req, res) => {
     let answear;

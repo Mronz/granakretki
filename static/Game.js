@@ -90,7 +90,7 @@ class Game {
 
         this.x = 1 // Zmienne pomocnicze do animacji kamery
         this.y = 1800
-        //this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
+        this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
         this.render() // wywołanie metody render
     }
 
@@ -110,7 +110,7 @@ class Game {
                 if (object.name == "greenPawn" || object.name == "orangePawn") {
                     selectedPawn = object
                 }
-                else if (object.name == "plate") {
+                else if (object.name == "plate" && selectedPawn != null) {
                     let pos = object.position
                     selectedPawn.position.set(pos.x, pos.y, pos.z);
 

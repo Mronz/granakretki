@@ -21,6 +21,18 @@ class Net {
             .then(data => ui.entering(data)) // dane odpowiedzi z serwera
             .catch(error => console.log(error));
     }
+    // reset pokoju
+    resetRoom = (num) => {
+        const data = JSON.stringify({ roomNumber: num })
+        const options = {
+            method: "POST",
+            body: data
+        };
+        fetch("/RESET_ROOM", options)
+            .then(response => response.json()) // konwersja na json
+            // .then(data => ui.entering(data)) // dane odpowiedzi z serwera
+            .catch(error => console.log(error));
+    }
     // wysylanie zapytania sprawdzajacego czy jest dwch graczy w pokoju i czy mozna rozpoczac
     asking = async () => {
         let x = 0;

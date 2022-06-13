@@ -103,6 +103,12 @@ class Ui {
             bt.innerText = "Dołącz";
             // bt.id = i;
             td.appendChild(bt);
+            bt = document.createElement("button");
+            bt.onclick = () => {
+                net.resetRoom(i)
+            }
+            bt.innerText = "Reset";
+            td.appendChild(bt);
             tr.appendChild(td);
             table.appendChild(tr)
         }
