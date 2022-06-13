@@ -44,7 +44,7 @@ app.post("/ASK", (req, res) => {
         data = JSON.parse(data)
         let room = lobby[data.roomNumber];
         if (room.player1 != null && room.player2 != null) {
-            answear = { status: "start" }
+            answear = { status: "start", board: room.board, turn: room.turn }
         }
         else answear = { status: "wait" }
     })
@@ -54,6 +54,20 @@ app.post("/ASK", (req, res) => {
     })
 })
 
+app.post("/UPDATE", (req, res) => {
+    let answear;
+    req.on("data", function (data) {
+        data = JSON.parse(data)
+        data = { roomNumber: SVGAnimatedString, board: Game.boa }
+
+        let room = lobby[data.roomNumber];
+        room.board = data.board
+    })
+    req.on("end", function (data) {
+        res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
+        res.end(JSON.stringify(answear, null, 5));
+    })
+})
 
 app.listen(PORT, function () {
     console.log("start serwera na porcie " + PORT)

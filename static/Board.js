@@ -2,8 +2,8 @@
 class Board extends THREE.Mesh {
     constructor() {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
-        
-        const geometry = new THREE.BoxGeometry(1500, 5, 1500);
+
+        const geometry = new THREE.BoxGeometry(300, 5, 300);
 
         var material = new THREE.MeshBasicMaterial({
             side: THREE.DoubleSide, // dwustronny
@@ -12,7 +12,6 @@ class Board extends THREE.Mesh {
         })
 
         material.map = new THREE.TextureLoader().load('./gfx/paperTexture.png')
-
         this.field = new THREE.Mesh(geometry, material);
         return this.field
     }

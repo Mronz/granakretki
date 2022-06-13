@@ -42,7 +42,9 @@ class Net {
         function status(data) {
             if (data.status == "start") {
                 x++;
-                // game.start()
+                game.board = data.board
+                game.turn = data.turn
+                game.start()
                 ui.changeStatus("Start")
             }
             else ui.changeStatus("waiting")

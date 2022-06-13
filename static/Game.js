@@ -23,12 +23,42 @@ class Game {
         this.board;
         this.roomNumber = null;
         this.player;
+        this.turn;
         this.holder = new Holder
         this.scene.add(this.holder) // Dodanie podstawki
-        this.board = new Board
-        this.board.position.set(200, 16, 200)
-        this.scene.add(this.board) // Dodanie planszy - papier
 
+
+        // tworzenie pol planszy
+        for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 5; j++) {
+                this.plate = new Board
+                this.plate.name = "plate"
+                this.plate.position.set(-400 + i * 300, 20, -400 + j * 300)
+                this.plate.pos = i + '_' + j
+                this.scene.add(this.plate) // Dodanie pola do planszy
+            }
+
+        }
+        // pionki 1
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++) {
+                this.pawn = new Pawn("orange")
+                this.pawn.name = "orangePawn"
+                this.pawn.position.set(-1000 + i * 300, 20, -400 + j * 300)
+                this.pawn.player = 1;
+                this.scene.add(this.pawn)
+            }
+        }
+        // pionki 2
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++) {
+                this.pawn = new Pawn("green")
+                this.pawn.name = "greenPawn"
+                this.pawn.position.set(-1000 + i * 300, 20, 500 + j * 300)
+                this.pawn.player = 2;
+                this.scene.add(this.pawn)
+            }
+        }
 
         this.pos_z = -1000 // pomocnicze do dodania bloków
         this.pos_x = 800
@@ -52,9 +82,7 @@ class Game {
         this.titlePage.position.set(-400, 16, -700)
         this.scene.add(this.titlePage)
 
-        this.pawn = new Pawn("orange")
-        this.pawn.position.set(-400, 20, -400)
-        this.scene.add(this.pawn)
+
 
         for (let i = 0; i < 8; i++) {
 
@@ -62,9 +90,64 @@ class Game {
 
         this.x = 1 // Zmienne pomocnicze do animacji kamery
         this.y = 1800
-        this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
+        //this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
         this.render() // wywołanie metody render
     }
+
+    start = () => {
+        let selectedPawn = null;
+        document.addEventListener("mousedown", (event) => {
+            this.mouseVector.x = (event.clientX / window.innerWidth) * 2 - 1;
+            this.mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            this.raycaster.setFromCamera(this.mouseVector, this.camera);
+            const intersects = this.raycaster.intersectObjects(this.scene.children);
+            //console.log(intersects.length)
+
+            if (intersects.length > 0) {
+
+                let object = intersects[0].object
+                //console.log(object);
+                if (object.name == "greenPawn" || object.name == "orangePawn") {
+                    selectedPawn = object
+                }
+                else if (object.name == "plate") {
+                    let pos = object.position
+                    selectedPawn.position.set(pos.x, pos.y, pos.z);
+
+                    let pos_x = object.pos[0]
+                    let pos_y = object.pos[2]
+                    if (selectedPawn.name == "orangePawn") {
+                        game.board[pos_x][pos_y] = 1
+                    }
+                    else if (selectedPawn.name == "greenPawn") {
+                        game.board[pos_x][pos_y] = 2
+                    }
+                    selectedPawn = null;
+                    console.log(object);
+                    console.log(game.board);
+                    this.checkWin();
+
+                }
+
+
+            }
+        })
+
+    }
+
+
+
+    updatePawns = () => {
+        for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 5; j++) {
+                if (game.board == 1) {
+                    //setposioosn
+                }
+            }
+
+        }
+    }
+
 
     cameraAnimationInLobby = (camera) => { // Obracanie w elipsie
         let kat = game.x * (Math.PI / 180);
@@ -79,7 +162,6 @@ class Game {
         game.y--
 
     }
-
 
     cameraScale = () => { // Ustawienie kamery na środku, mimo zmniejszenia/powiększenia okna
         game.camera.aspect = window.innerWidth / window.innerHeight;
