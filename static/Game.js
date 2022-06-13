@@ -57,7 +57,7 @@ class Game {
         this.scene.add(this.pawn)
 
         for (let i = 0; i < 8; i++) {
-            
+
         }
 
         this.x = 1 // Zmienne pomocnicze do animacji kamery
@@ -92,5 +92,81 @@ class Game {
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene, this.camera);
 
+    }
+    checkWin = () => {
+        let actualBoard = game.board;
+        let winner = null;
+        for (let playerId = 1; playerId <= 2; playerId++) {
+            for (let i = 0; i < 5; i++) {
+                for (let j = 0; j < 5; j++) {
+                    if (actualBoard[i]?.[j] == playerId &&
+                        actualBoard[i + 1]?.[j] == playerId &&
+                        actualBoard[i + 2]?.[j] == playerId &&
+                        actualBoard[i + 3]?.[j] == playerId) { // pionowo
+                        winner = playerId;
+                    }
+                    else if (actualBoard[i]?.[j] == playerId &&
+                        actualBoard[i]?.[j + 1] == playerId &&
+                        actualBoard[i]?.[j + 2] == playerId &&
+                        actualBoard[i]?.[j + 3] == playerId) { // poziomo
+                        winner = playerId;
+                    }
+                    else if (actualBoard[i]?.[j] == playerId &&
+                        actualBoard[i + 1]?.[j + 1] == playerId &&
+                        actualBoard[i + 2]?.[j + 2] == playerId &&
+                        actualBoard[i + 3]?.[j + 3] == playerId) { // ukos do prawej
+                        winner = playerId;
+                    }
+                    else if (actualBoard[i]?.[j] == playerId &&
+                        actualBoard[i + 1]?.[j - 1] == playerId &&
+                        actualBoard[i + 2]?.[j - 2] == playerId &&
+                        actualBoard[i + 3]?.[j - 3] == playerId) { // ukos do lewej
+                        winner = playerId;
+                    }
+                    else if (actualBoard[i]?.[j] == playerId &&
+                        actualBoard[i + 1]?.[j] == playerId &&
+                        actualBoard[i + 1]?.[j + 1] == playerId &&
+                        actualBoard[i]?.[j + 1] == playerId) { // kwadrat co kratke
+                        winner = playerId;
+                    }
+                    else if (actualBoard[i]?.[j] == playerId &&
+                        actualBoard[i + 2]?.[j] == playerId &&
+                        actualBoard[i + 2]?.[j + 2] == playerId &&
+                        actualBoard[i]?.[j + 2] == playerId) { // kwadrat co 2 kratki
+                        winner = playerId;
+                    }
+                    else if (actualBoard[i]?.[j] == playerId &&
+                        actualBoard[i + 3]?.[j] == playerId &&
+                        actualBoard[i + 3]?.[j + 3] == playerId &&
+                        actualBoard[i]?.[j + 3] == playerId) { // kwadrat co 3 kratki
+                        winner = playerId;
+                    }
+                    else if (actualBoard[i]?.[j] == playerId &&
+                        actualBoard[i + 4]?.[j] == playerId &&
+                        actualBoard[i + 4]?.[j + 4] == playerId &&
+                        actualBoard[i]?.[j + 4] == playerId) { // kwadrat co 4 kratki
+                        winner = playerId;
+                    }
+                    else if (actualBoard[i]?.[j] == playerId &&
+                        actualBoard[i + 1]?.[j - 1] == playerId &&
+                        actualBoard[i + 1]?.[j + 1] == playerId &&
+                        actualBoard[i + 2]?.[j] == playerId) { // romb co kratke
+                        winner = playerId;
+                    }
+                    else if (actualBoard[i]?.[j] == playerId &&
+                        actualBoard[i + 2]?.[j - 2] == playerId &&
+                        actualBoard[i + 2]?.[j + 2] == playerId &&
+                        actualBoard[i + 4]?.[j] == playerId) { // romb co 2 kratki
+                        winner = playerId;
+                    }
+                }
+            }
+        }
+        if (winner == 1) {
+            console.log("wygrał 1");
+        }
+        else if (winner == 2) {
+            console.log("wygrał 2");
+        }
     }
 }
