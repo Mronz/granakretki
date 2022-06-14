@@ -25,6 +25,7 @@ class Game {
         this.player;
         this.turn;
         this.name;
+        this.enemy;
         this.holder = new Holder
         this.scene.add(this.holder) // Dodanie podstawki
         this.pawns = []
@@ -122,12 +123,12 @@ class Game {
 
     start = () => {
         if (this.player == 1) {
-            document.getElementById("status").innerHTML = "Grasz pomarańczowymi"
+            document.getElementById("status").innerHTML = "Grasz pomarańczowymi! Grasz przeciwko " + this.enemy
             clearInterval(this.kamera)
             this.camera.position.set(0, 2000, -2000)
             this.camera.lookAt(this.scene.position)
         } else {
-            document.getElementById("status").innerHTML = "Grasz zielonymi"
+            document.getElementById("status").innerHTML = "Grasz zielonymi! Grasz przeciwko " + this.enemy
             clearInterval(this.kamera)
             this.camera.position.set(0, 2000, 2000)
             this.camera.lookAt(this.scene.position)
