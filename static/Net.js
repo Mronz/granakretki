@@ -62,4 +62,18 @@ class Net {
             else ui.changeStatus("waiting")
         }
     }
+    updateBoard = (num, board) => {
+        const data = JSON.stringify({ roomNumber: num, board:board })
+        const options = {
+            method: "POST",
+            body: data
+        };
+        fetch("/UPDATE_ROOM", options)
+            .then(response => response.json()) // konwersja na json
+            .then(data => {
+                game.turn = data.turn;
+                game.board = data.board;
+            }) // dane odpowiedzi z serwera
+            .catch(error => console.log(error));
+    }
 }

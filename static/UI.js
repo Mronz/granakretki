@@ -132,13 +132,4 @@ class Ui {
         status.innerHTML = "Status <br>" + info;
     }
 
-    // zmiana okna
-    resize() {
-        window.onresize = () => {
-            console.log("resize");
-            game.camera.aspect = window.innerWidth / window.innerHeight;
-            game.camera.updateProjectionMatrix();
-            game.renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-    }
 }

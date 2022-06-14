@@ -76,14 +76,13 @@ app.post("/RESET_ROOM", (req, res) => {
 })
 
 
-app.post("/UPDATE", (req, res) => {
-    let answear;
+app.post("/UPDATE_ROOM", (req, res) => {
+    let answear
     req.on("data", function (data) {
         data = JSON.parse(data)
-        data = { roomNumber: SVGAnimatedString, board: Game.boa }
-
-        let room = lobby[data.roomNumber];
-        room.board = data.board
+        lobby[data.roomNumber].board = data.board
+        lobby[data.roomNumber].turn == 1?lobby[data.roomNumber].turn = 2:lobby[data.roomNumber].turn = 1
+        answear = {turn:lobby[data.roomNumber].turn, board:lobby[data.roomNumber].board }
     })
     req.on("end", function (data) {
         res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });

@@ -90,46 +90,78 @@ class Game {
 
         this.x = 1 // Zmienne pomocnicze do animacji kamery
         this.y = 1800
-        this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
+        // this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
         this.render() // wywołanie metody render
     }
 
     start = () => {
         let selectedPawn = null;
         document.addEventListener("mousedown", (event) => {
+
             this.mouseVector.x = (event.clientX / window.innerWidth) * 2 - 1;
             this.mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
             this.raycaster.setFromCamera(this.mouseVector, this.camera);
             const intersects = this.raycaster.intersectObjects(this.scene.children);
             //console.log(intersects.length)
+            if (this.turn == this.player) {
 
-            if (intersects.length > 0) {
+                if (intersects.length > 0) {
 
-                let object = intersects[0].object
-                //console.log(object);
-                if (object.name == "greenPawn" || object.name == "orangePawn") {
-                    selectedPawn = object
-                }
-                else if (object.name == "plate" && selectedPawn != null) {
-                    let pos = object.position
-                    selectedPawn.position.set(pos.x, pos.y, pos.z);
+                    let object = intersects[0].object
+                    //console.log(object);
 
-                    let pos_x = object.pos[0]
-                    let pos_y = object.pos[2]
-                    if (selectedPawn.name == "orangePawn") {
-                        game.board[pos_x][pos_y] = 1
+                    if(this.player == 1){
+                        if (object.name == "orangePawn") {
+                            selectedPawn = object
+                        }
+                        else if (object.name == "plate" && selectedPawn != null) {
+                            let pos = object.position
+                            selectedPawn.position.set(pos.x, pos.y, pos.z);
+    
+                            let pos_x = object.pos[0]
+                            let pos_y = object.pos[2]
+                            game.board[pos_x][pos_y] = 1
+
+                            
+                            selectedPawn = null;
+                            console.log(object);
+                            console.log(game.board);
+
+                            net.updateBoard(this.roomNumber,this.board)
+
+                            this.checkWin();
+    
+                        }
                     }
-                    else if (selectedPawn.name == "greenPawn") {
-                        game.board[pos_x][pos_y] = 2
+                    else{
+                        if (object.name == "greenPawn") {
+                            selectedPawn = object
+                        }
+                        else if (object.name == "plate" && selectedPawn != null) {
+                            let pos = object.position
+                            selectedPawn.position.set(pos.x, pos.y, pos.z);
+    
+                            let pos_x = object.pos[0]
+                            let pos_y = object.pos[2]
+                            
+                            game.board[pos_x][pos_y] = 2
+                            
+                            selectedPawn = null;
+                            console.log(object);
+                            console.log(game.board);
+                            
+                            net.updateBoard(this.roomNumber,this.board)
+                            
+                            this.checkWin();
+                            
+    
+                        }
                     }
-                    selectedPawn = null;
-                    console.log(object);
-                    console.log(game.board);
-                    this.checkWin();
+
+                    
 
                 }
-
-
+                
             }
         })
 
