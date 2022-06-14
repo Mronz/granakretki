@@ -112,6 +112,12 @@ class Game {
                 this.animation(game.positions[0], game.positions[1], game.positions[2], pawnToMove)
             }
         }
+        let x = this.checkWin();
+        if (x != null) {
+            ui.changeStatus("Przeciwnik z Tobą wygrał frajerze!")
+            document.removeEventListener("onmousedown")
+        }
+
 
     }
     animation = (x, y, z, co) => {
@@ -218,7 +224,10 @@ class Game {
                                     // console.log(game.board);
                                     net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
                                     selectedPawn = null;
-                                    this.checkWin();
+                                    let x = this.checkWin();
+                                    if (x != null) {
+                                        ui.changeStatus("Wygrałeś na tego frajera!")
+                                    }
 
 
 
@@ -243,7 +252,10 @@ class Game {
 
                                         net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
                                         selectedPawn = null;
-                                        this.checkWin();
+                                        let x = this.checkWin();
+                                        if (x != null) {
+                                            ui.changeStatus("Wygrałeś na tego frajera!")
+                                        }
                                         net.waitingForTurn()
 
                                     }
@@ -313,7 +325,10 @@ class Game {
                                     net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
                                     selectedPawn = null;
 
-                                    this.checkWin();
+                                    let x = this.checkWin();
+                                    if (x != null) {
+                                        ui.changeStatus("Wygrałeś na tego frajera!")
+                                    }
 
                                     net.waitingForTurn()
                                 }
@@ -338,6 +353,9 @@ class Game {
                                     net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
                                     selectedPawn = null;
                                     let x = this.checkWin();
+                                    if (x != null) {
+                                        ui.changeStatus("Wygrałeś na tego frajera!")
+                                    }
 
 
                                     net.waitingForTurn()
