@@ -62,8 +62,8 @@ class Net {
             else ui.changeStatus("waiting")
         }
     }
-    updateBoard = (num, board) => {
-        const data = JSON.stringify({ roomNumber: num, board:board })
+    updateBoard = (num, board, name, positions) => {
+        const data = JSON.stringify({ roomNumber: num, board: board, pawn: name, positions: positions })
         const options = {
             method: "POST",
             body: data
@@ -73,14 +73,16 @@ class Net {
             .then(data => {
                 game.turn = data.turn;
                 game.board = data.board;
+                game.name = data.name;
+                game.positions = data.positions;
             }) // dane odpowiedzi z serwera
             .catch(error => console.log(error));
     }
     waitingForTurn = async () => {
         let x = 0;
         while (x == 0) {
-            console.log("czekom kurw");
-            const data = JSON.stringify({ roomNumber: game.roomNumber, board:game.board})
+            // console.log("czekom kurw");
+            const data = JSON.stringify({ roomNumber: game.roomNumber, board: game.board, name: game.name, positions: game.positions })
             const options = {
                 method: "POST",
                 body: data
@@ -89,11 +91,14 @@ class Net {
                 .then(response => response.json()) // konwersja na json
                 .then(data => {
                     console.log(data);
-                    if(data.status== "wait"){
-                        console.log("czekam");
-                    }else if (data.status == "move"){
+                    if (data.status == "wait") {
+                        // console.log("czekam");
+                    } else if (data.status == "move") {
                         game.board = data.board
                         game.turn = data.turn
+                        game.name = data.name
+                        game.positions = data.positions
+                        game.enemyMove();
                         x++;
                     }
                 }) // dane odpowiedzi z serwera

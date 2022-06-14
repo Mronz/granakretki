@@ -24,9 +24,11 @@ class Game {
         this.roomNumber = null;
         this.player;
         this.turn;
+        this.name;
         this.holder = new Holder
         this.scene.add(this.holder) // Dodanie podstawki
-
+        this.pawns = []
+        this.positions;
 
         // tworzenie pol planszy
         for (let i = 0; i < 5; i++) {
@@ -42,21 +44,27 @@ class Game {
         // pionki 1
         for (let i = 0; i < 2; i++) {
             for (let j = 0; j < 2; j++) {
+
                 this.pawn = new Pawn("orange")
                 this.pawn.name = "orangePawn"
+                this.pawn.helpingName = i + "orange" + j
                 this.pawn.position.set(-1000 + i * 300, 20, -400 + j * 300)
                 this.pawn.player = 1;
                 this.scene.add(this.pawn)
+                this.pawns.push(this.pawn)
             }
         }
         // pionki 2
         for (let i = 0; i < 2; i++) {
             for (let j = 0; j < 2; j++) {
+
                 this.pawn = new Pawn("green")
                 this.pawn.name = "greenPawn"
+                this.pawn.helpingName = i + "green" + j
                 this.pawn.position.set(-1000 + i * 300, 20, 500 + j * 300)
                 this.pawn.player = 2;
                 this.scene.add(this.pawn)
+                this.pawns.push(this.pawn)
             }
         }
 
@@ -82,24 +90,30 @@ class Game {
         this.titlePage.position.set(-400, 16, -700)
         this.scene.add(this.titlePage)
 
-
-
-        for (let i = 0; i < 8; i++) {
-
-        }
-
         this.x = 1 // Zmienne pomocnicze do animacji kamery
         this.y = 1800
         // this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
         this.render() // wywołanie metody render
     }
 
+    enemyMove = () => {
+        // console.log(">  ")
+        for (let i = 0; i < game.pawns.length; i++) {
+            if (game.pawns[i].helpingName == game.name) {
+                let pawnToMove = game.pawns[i]
+                console.log(pawnToMove)
+                console.log(game.positions)
+
+                pawnToMove.position.set(game.positions[0], game.positions[1], game.positions[2]);
+            }
+        }
+
+    }
+
     start = () => {
-if (this.turn!=this.player) {
-    net.waitingForTurn()
-}
-
-
+        if (this.turn != this.player) {
+            net.waitingForTurn()
+        }
         let selectedPawn = null;
         document.addEventListener("mousedown", (event) => {
 
@@ -113,68 +127,73 @@ if (this.turn!=this.player) {
                 if (intersects.length > 0) {
 
                     let object = intersects[0].object
-                    //console.log(object);
+                    // console.log(object);
 
-                    if(this.player == 1){
+                    if (this.player == 1) {
                         if (object.name == "orangePawn") {
                             selectedPawn = object
                         }
                         else if (object.name == "plate" && selectedPawn != null) {
                             let pos = object.position
-                            
-    
+
+
                             let pos_x = object.pos[0]
                             let pos_y = object.pos[2]
 
-                            if (game.board[pos_x][pos_y]== 0 ) {
+                            if (game.board[pos_x][pos_y] == 0) {
                                 selectedPawn.position.set(pos.x, pos.y, pos.z);
+
+                                let positionsToMove = [pos.x, pos.y, pos.z]
+
                                 game.board[pos_x][pos_y] = 1
+
+                                // console.log(object);
+                                console.log(game.board);
+
+                                net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
                                 selectedPawn = null;
-                            console.log(object);
-                            console.log(game.board);
 
-                            net.updateBoard(this.roomNumber,this.board)
+                                this.checkWin();
 
-                            this.checkWin();
-
-                            net.waitingForTurn()
+                                net.waitingForTurn()
                             }
-                            
-                            
-    
+
+
+
                         }
                     }
-                    else{
+                    else {
                         if (object.name == "greenPawn") {
                             selectedPawn = object
                         }
                         else if (object.name == "plate" && selectedPawn != null) {
                             let pos = object.position
-                            
-    
+
+
                             let pos_x = object.pos[0]
                             let pos_y = object.pos[2]
-                            
-                            if (game.board[pos_x][pos_y]== 0 ) {
+
+                            if (game.board[pos_x][pos_y] == 0) {
                                 selectedPawn.position.set(pos.x, pos.y, pos.z);
                                 game.board[pos_x][pos_y] = 2
-                                selectedPawn = null;
-                            console.log(object);
-                            console.log(game.board);
-                            
-                            net.updateBoard(this.roomNumber,this.board)
-                            
-                            this.checkWin();
+                                let positionsToMove = [pos.x, pos.y, pos.z]
+                                // console.log(object);
+                                console.log(game.board);
 
-                            net.waitingForTurn()
+                                net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
+                                selectedPawn = null;
+
+                                this.checkWin();
+
+                                net.waitingForTurn()
                             }
 
                         }
                     }
                 }
-                
-            } else if (this.turn != this.player){
-               // net.waitingForTurn()
+
+            } else if (this.turn != this.player) {
+                // net.waitingForTurn()
             }
         })
 

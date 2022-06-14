@@ -10,6 +10,8 @@ class Room {
             [0, 0, 0, 0, 0]
         ]
         this.turn = 1
+        this.name;
+        this.positions;
     }
 }
 

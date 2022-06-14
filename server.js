@@ -81,8 +81,10 @@ app.post("/UPDATE_ROOM", (req, res) => {
     req.on("data", function (data) {
         data = JSON.parse(data)
         lobby[data.roomNumber].board = data.board
-        lobby[data.roomNumber].turn == 1?lobby[data.roomNumber].turn = 2:lobby[data.roomNumber].turn = 1
-        answear = {turn:lobby[data.roomNumber].turn, board:lobby[data.roomNumber].board }
+        lobby[data.roomNumber].turn == 1 ? lobby[data.roomNumber].turn = 2 : lobby[data.roomNumber].turn = 1
+        lobby[data.roomNumber].name = data.pawn
+        lobby[data.roomNumber].positions = data.positions
+        answear = { turn: lobby[data.roomNumber].turn, board: lobby[data.roomNumber].board, name: lobby[data.roomNumber].name, positions: lobby[data.roomNumber].positions }
     })
     req.on("end", function (data) {
         res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
@@ -94,12 +96,11 @@ app.post("/ASK_TURN", (req, res) => {
     let answear;
     req.on("data", function (data) {
         data = JSON.parse(data)
-
-        if (JSON.stringify( lobby[data.roomNumber].board) == JSON.stringify( data.board)) {
-            console.log("waita robie");
-            answear = { status: "wait"}
-        }else {
-        answear = { status: "move", board: lobby[data.roomNumber].board, turn:lobby[data.roomNumber].turn}
+        // console.log(data)
+        if (JSON.stringify(lobby[data.roomNumber].board) == JSON.stringify(data.board)) {
+            answear = { status: "wait" }
+        } else {
+            answear = { status: "move", board: lobby[data.roomNumber].board, turn: lobby[data.roomNumber].turn, name: lobby[data.roomNumber].name, positions: lobby[data.roomNumber].positions }
         }
     })
     req.on("end", function (data) {
