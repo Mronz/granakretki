@@ -129,7 +129,7 @@ class Ui {
     // zmiana statusu
     changeStatus(info) {
         let status = document.getElementById('status')
-        status.innerHTML = "Status <br>" + info;
+        status.innerHTML = info;
     }
 
 }

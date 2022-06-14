@@ -115,7 +115,7 @@ class Game {
         let x = this.checkWin();
         if (x != null) {
             ui.changeStatus("Przeciwnik z Tobą wygrał frajerze!")
-            document.removeEventListener("onmousedown")
+            document.onmousedown = null
         }
 
 
@@ -151,7 +151,7 @@ class Game {
         var pom2 = 0
         var klikniete2 = []
 
-        document.addEventListener("mousedown", (event) => {
+        document.onmousedown = (event) => {
             this.mouseVector.x = (event.clientX / window.innerWidth) * 2 - 1;
             this.mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
             this.raycaster.setFromCamera(this.mouseVector, this.camera);
@@ -227,11 +227,10 @@ class Game {
                                     let x = this.checkWin();
                                     if (x != null) {
                                         ui.changeStatus("Wygrałeś na tego frajera!")
-                                    }
+                                    } else net.waitingForTurn()
 
 
 
-                                    net.waitingForTurn()
                                 } else if (doRuszenia == 0) {
                                     if ((selectedPawn.position.x == pos.x + 300 && selectedPawn.position.z == pos.z)
                                         || (selectedPawn.position.x == pos.x - 300 && selectedPawn.position.z == pos.z)
@@ -255,8 +254,7 @@ class Game {
                                         let x = this.checkWin();
                                         if (x != null) {
                                             ui.changeStatus("Wygrałeś na tego frajera!")
-                                        }
-                                        net.waitingForTurn()
+                                        } else net.waitingForTurn()
 
                                     }
                                 }
@@ -328,9 +326,7 @@ class Game {
                                     let x = this.checkWin();
                                     if (x != null) {
                                         ui.changeStatus("Wygrałeś na tego frajera!")
-                                    }
-
-                                    net.waitingForTurn()
+                                    } else net.waitingForTurn()
                                 }
                             } else if (doRuszenia == 0) {
                                 if ((selectedPawn.position.x == pos.x + 300 && selectedPawn.position.z == pos.z)
@@ -355,10 +351,7 @@ class Game {
                                     let x = this.checkWin();
                                     if (x != null) {
                                         ui.changeStatus("Wygrałeś na tego frajera!")
-                                    }
-
-
-                                    net.waitingForTurn()
+                                    } else net.waitingForTurn()
 
                                 }
                             }
@@ -369,7 +362,7 @@ class Game {
             } else if (this.turn != this.player) {
                 // net.waitingForTurn()
             }
-        })
+        }
 
     }
 

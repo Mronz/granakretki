@@ -105,13 +105,13 @@ class Net {
         p.innerHTML = "Twój przeciwnik ma ruch, zostało mu 60 [s];"
         div.appendChild(p)
         var countDownDate = Date.now() + 61000
-
+        var seconds
         var countDowning = setInterval(function () {
             var now = Date.now();
 
             var distance = countDownDate - now
 
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             p.innerHTML = `Twój przeciwnik ma ruch, zostało mu ${seconds}[s];`
 
@@ -129,7 +129,12 @@ class Net {
                 .then(data => {
                     // console.log(data);
                     if (data.status == "wait") {
-
+                        if (seconds < 0) {
+                            clearInterval(countDowning)
+                            document.onmousedown = null
+                            ui.changeStatus("Wygrałeś na tego frajera!")
+                            document.getElementById("waitingForTurn").remove()
+                        }
 
                         // console.log("czekam");
                     } else if (data.status == "move") {
