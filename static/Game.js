@@ -197,7 +197,7 @@ class Game {
                     if (this.player == 1) {
                         if (object.name == "orangePawn") {
                             selectedPawn = object
-                            console.log(selectedPawn)
+                            // console.log(selectedPawn)
 
                             if ((object.position.x == -700 || object.position.x == -1000) && doRuszenia > 0) {
                                 if (pom == 0) {
@@ -218,7 +218,7 @@ class Game {
                                         game.boradFields[i].position.z == selectedPawn.position.z
                                     ) {
                                         game.naktorymstoi = game.boradFields[i]
-                                        console.log(game.naktorymstoi)
+                                        // console.log(game.naktorymstoi)
                                     }
                                 }
                                 if (pom2 == 0) {
@@ -270,7 +270,7 @@ class Game {
                                         || (selectedPawn.position.z == pos.z - 300 && selectedPawn.position.x == pos.x)
                                     ) {
 
-                                        console.log(object)
+                                        // console.log(object)
                                         // selectedPawn.position.set(pos.x, pos.y, pos.z);
                                         clearInterval(this.interval);
                                         document.getElementById("yourTurn").remove()
@@ -278,7 +278,7 @@ class Game {
                                         selectedPawn.material.color = { r: 1, g: 0.6470588235294118, b: 0 }
                                         let positionsToMove = [pos.x, pos.y, pos.z]
                                         game.board[pos_x][pos_y] = 1
-                                        console.log(game.naktorymstoi)
+                                        // console.log(game.naktorymstoi)
                                         let pos1_x = game.naktorymstoi.pos[0]
                                         let pos1_y = game.naktorymstoi.pos[2]
                                         game.board[pos1_x][pos1_y] = 0
@@ -303,11 +303,11 @@ class Game {
                             selectedPawn = object
                             if ((object.position.x == -700 || object.position.x == -1000) && doRuszenia > 0) {
                                 if (pom == 0) {
-                                    console.log(selectedPawn.material.color)
+                                    // console.log(selectedPawn.material.color)
                                     selectedPawn.material.color = { r: 1, b: 0, g: 0 }
                                     kliekniete.push(selectedPawn)
                                 } else if (pom >= 1) {
-                                    console.log(kliekniete)
+                                    // console.log(kliekniete)
                                     kliekniete[pom - 1].material.color = { r: 0, g: 0.5019607843137255, b: 0 }
                                     selectedPawn.material.color = { r: 1, b: 0, g: 0 }
                                     kliekniete.push(selectedPawn)
@@ -371,7 +371,7 @@ class Game {
                                     || (selectedPawn.position.z == pos.z - 300 && selectedPawn.position.x == pos.x)
                                 ) {
 
-                                    console.log(object)
+                                    // console.log(object)
                                     // selectedPawn.position.set(pos.x, pos.y, pos.z);
                                     clearInterval(this.interval);
                                     document.getElementById("yourTurn").remove()
@@ -514,11 +514,11 @@ class Game {
             }
         }
         if (winner == 1) {
-            console.log("wygrał 1");
+            // console.log("wygrał 1");
             return 1
         }
         else if (winner == 2) {
-            console.log("wygrał 2");
+            // console.log("wygrał 2");
             return 2
         }
         else return null
