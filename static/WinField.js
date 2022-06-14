@@ -3,7 +3,7 @@ class WinField extends THREE.Mesh {
     constructor(x, pom) {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
         this.x = x
-        const geometry = new THREE.BoxGeometry(200, 5, 200);
+        const geometry = new THREE.BoxGeometry(240, 5, 240);
 
         var material = new THREE.MeshBasicMaterial({
             side: THREE.DoubleSide, // dwustronny

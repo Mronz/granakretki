@@ -46,9 +46,7 @@ class Net {
         loader.id = "loader"
         div.appendChild(loader)
 
-        if (game.player == 1) {
-            
-        }
+
 
         while (x == 0) {
 
@@ -70,8 +68,9 @@ class Net {
                 x++;
                 game.board = data.board
                 game.turn = data.turn
-                game.start()
+
                 ui.changeStatus("Start")
+                game.start()
                 document.getElementById("waitingForEnemy").remove()
             }
             else ui.changeStatus("waiting")

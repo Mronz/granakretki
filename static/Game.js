@@ -6,8 +6,8 @@ class Game {
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setClearColor(0x000000);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-        const axes = new THREE.AxesHelper(1000)
-        this.scene.add(axes)
+        // const axes = new THREE.AxesHelper(1000)
+        // this.scene.add(axes)
         this.camera.position.set(1500, 1500, 1500)
         // this.camera.position.set(1500, 1500, 0)
         this.camera.lookAt(this.scene.position)
@@ -95,7 +95,7 @@ class Game {
         this.x = 1 // Zmienne pomocnicze do animacji kamery
         this.y = 1800
         this.naktorymstoi
-        // this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
+        this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
         this.render() // wywołanie metody render
     }
 
@@ -121,6 +121,19 @@ class Game {
     }
 
     start = () => {
+        if (this.player == 1) {
+            document.getElementById("status").innerHTML = "Grasz pomarańczowymi"
+            clearInterval(this.kamera)
+            this.camera.position.set(0, 2000, -2000)
+            this.camera.lookAt(this.scene.position)
+        } else {
+            document.getElementById("status").innerHTML = "Grasz zielonymi"
+            clearInterval(this.kamera)
+            this.camera.position.set(0, 2000, 2000)
+            this.camera.lookAt(this.scene.position)
+        }
+
+
         if (this.turn != this.player) {
             net.waitingForTurn()
         }
