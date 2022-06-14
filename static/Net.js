@@ -134,7 +134,7 @@ class Net {
                             clearInterval(countDowning)
                             document.onmousedown = null
                             ui.changeStatus("Wygrałeś na tego frajera!")
-                            document.getElementById("waitingForTurn").remove()
+                            if (document.getElementById("waitingForTurn")) document.getElementById("waitingForTurn").remove()
                         }
 
                         // console.log("czekam");
