@@ -219,6 +219,8 @@ class Game {
                                     selectedPawn = null;
                                     this.checkWin();
 
+
+
                                     net.waitingForTurn()
                                 } else if (doRuszenia == 0) {
                                     if ((selectedPawn.position.x == pos.x + 300 && selectedPawn.position.z == pos.z)
