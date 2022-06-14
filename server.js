@@ -18,7 +18,7 @@ app.post("/GET_ROOMS", (req, res) => {
 app.post("/ENTER_ROOM", (req, res) => {
     let answear;
     req.on("data", function (data) {
-        console.log("data: " + data)
+        // console.log("data: " + data)
         data = JSON.parse(data)
         let room = lobby[data.roomNumber];
         let name = data.username;
@@ -70,7 +70,7 @@ app.post("/RESET_ROOM", (req, res) => {
             [0, 0, 0, 0, 0]
         ]
         room.turn = 1
-        console.log("Reset pokoju: " + data.roomNumber);
+        // console.log("Reset pokoju: " + data.roomNumber);
     })
     req.on("end", function (data) {
         res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
@@ -114,7 +114,7 @@ app.post("/ASK_TURN", (req, res) => {
 
 
 app.listen(PORT, function () {
-    console.log("start serwera na porcie " + PORT)
+    // console.log("start serwera na porcie " + PORT)
 })
 
 
