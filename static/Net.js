@@ -35,6 +35,7 @@ class Net {
     }
     // wysylanie zapytania sprawdzajacego czy jest dwch graczy w pokoju i czy mozna rozpoczac
     asking = async () => {
+        if (document.getElementById("loginWindow")) document.getElementById("loginWindow").remove();
         let x = 0;
 
         let div = document.createElement("div")
