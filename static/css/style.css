@@ -85,3 +85,19 @@ body {
     text-align: center;
 
 }
+
+#yourTurn {
+    padding: 10px;
+    margin: auto;
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    transform: translate(-50%, -50%);
+    background-color: purple;
+    color: yellow;
+    width: 200px;
+    height: 80px;
+    border: 2px solid yellow;
+    text-align: center;
+
+}

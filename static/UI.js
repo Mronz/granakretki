@@ -130,10 +130,7 @@ class Ui {
     changeStatus(info) {
         let status = document.getElementById('status')
         status.innerHTML = info;
-<<<<<<< HEAD
         // "Status <br>" + 
-=======
->>>>>>> f20ed964134af3de63b3b29478d36d0007864276
     }
 
 }
