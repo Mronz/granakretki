@@ -90,6 +90,25 @@ app.post("/UPDATE_ROOM", (req, res) => {
     })
 })
 
+app.post("/ASK_TURN", (req, res) => {
+    let answear;
+    req.on("data", function (data) {
+        data = JSON.parse(data)
+
+        if (JSON.stringify( lobby[data.roomNumber].board) == JSON.stringify( data.board)) {
+            console.log("waita robie");
+            answear = { status: "wait"}
+        }else {
+        answear = { status: "move", board: lobby[data.roomNumber].board, turn:lobby[data.roomNumber].turn}
+        }
+    })
+    req.on("end", function (data) {
+        res.writeHead(200, { "Content-type": "text/plain;charset=utf-8" });
+        res.end(JSON.stringify(answear, null, 5));
+    })
+})
+
+
 app.listen(PORT, function () {
     console.log("start serwera na porcie " + PORT)
 })

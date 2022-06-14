@@ -95,6 +95,11 @@ class Game {
     }
 
     start = () => {
+if (this.turn!=this.player) {
+    net.waitingForTurn()
+}
+
+
         let selectedPawn = null;
         document.addEventListener("mousedown", (event) => {
 
@@ -116,20 +121,26 @@ class Game {
                         }
                         else if (object.name == "plate" && selectedPawn != null) {
                             let pos = object.position
-                            selectedPawn.position.set(pos.x, pos.y, pos.z);
+                            
     
                             let pos_x = object.pos[0]
                             let pos_y = object.pos[2]
-                            game.board[pos_x][pos_y] = 1
 
-                            
-                            selectedPawn = null;
+                            if (game.board[pos_x][pos_y]== 0 ) {
+                                selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                game.board[pos_x][pos_y] = 1
+                                selectedPawn = null;
                             console.log(object);
                             console.log(game.board);
 
                             net.updateBoard(this.roomNumber,this.board)
 
                             this.checkWin();
+
+                            net.waitingForTurn()
+                            }
+                            
+                            
     
                         }
                     }
@@ -139,29 +150,31 @@ class Game {
                         }
                         else if (object.name == "plate" && selectedPawn != null) {
                             let pos = object.position
-                            selectedPawn.position.set(pos.x, pos.y, pos.z);
+                            
     
                             let pos_x = object.pos[0]
                             let pos_y = object.pos[2]
                             
-                            game.board[pos_x][pos_y] = 2
-                            
-                            selectedPawn = null;
+                            if (game.board[pos_x][pos_y]== 0 ) {
+                                selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                game.board[pos_x][pos_y] = 2
+                                selectedPawn = null;
                             console.log(object);
                             console.log(game.board);
                             
                             net.updateBoard(this.roomNumber,this.board)
                             
                             this.checkWin();
-                            
-    
+
+                            net.waitingForTurn()
+                            }
+
                         }
                     }
-
-                    
-
                 }
                 
+            } else if (this.turn != this.player){
+               // net.waitingForTurn()
             }
         })
 
