@@ -4,5 +4,23 @@
     "express": "^4.18.1",
     "mongodb": "2.2",
     "mongoose": "^6.3.8"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "granakretki",
+  "description": "wstepnie jakis interfejs stworzylem nie dziala nic narazie\r wrzucilem ci do game.js ten podstawowy renderer itp\r to okno logowania jest \"aboslute\" wiec nie powinno ci kolidowac przy robieniu planszy",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mronz/granakretki.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mronz/granakretki/issues"
+  },
+  "homepage": "https://github.com/Mronz/granakretki#readme"
 }
