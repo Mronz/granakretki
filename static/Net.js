@@ -139,11 +139,14 @@ class Net {
 
                         // console.log("czekam");
                     } else if (data.status == "move") {
+
+
                         game.board = data.board
                         game.turn = data.turn
                         game.name = data.name
                         game.positions = data.positions
                         game.enemyMove();
+                        game.jebanaFunkcja();
                         x++;
                         clearInterval(countDowning)
                         document.getElementById("waitingForTurn").remove()

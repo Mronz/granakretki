@@ -92,7 +92,7 @@ class Game {
         this.titlePage = new WinField(0, 0) // Ustawienie Dodatkowego bloka graficznego
         this.titlePage.position.set(-400, 16, -700)
         this.scene.add(this.titlePage)
-
+        this.interval
         this.x = 1 // Zmienne pomocnicze do animacji kamery
         this.y = 1800
         this.naktorymstoi
@@ -126,7 +126,34 @@ class Game {
             .easing(TWEEN.Easing.Bounce.Out) // typ easingu (zmiana w czasie)
             .start()
     }
+    jebanaFunkcja = () => {
+        let div = document.createElement("div")
+        div.id = "yourTurn"
+        document.body.appendChild(div)
 
+        let p = document.createElement("p")
+        p.id = "timer"
+        p.innerHTML = "Zostało ci 60 [s];"
+        div.appendChild(p)
+        var countDownDate = Date.now() + 61000
+        var seconds
+        this.interval = setInterval(() => {
+            var now = Date.now();
+
+            var distance = countDownDate - now
+
+            seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            p.innerHTML = `Zostało ci ${seconds}[s]; na wykonanie ruchu`
+
+            if (distance < 0) {
+                clearInterval(this.interval);
+                ui.changeStatus("Przeciwnik z Tobą wygrał frajerze!")
+                document.onmousedown = null
+
+            }
+        })
+    }
     start = () => {
         if (this.player == 1) {
             document.getElementById("status").innerHTML = "Grasz pomarańczowymi! Grasz przeciwko " + this.enemy
@@ -143,6 +170,9 @@ class Game {
 
         if (this.turn != this.player) {
             net.waitingForTurn()
+        } else if (this.turn == this.player) {
+            game.jebanaFunkcja()
+
         }
         let selectedPawn = null;
         var pom = 0
@@ -214,6 +244,8 @@ class Game {
 
                                 if ((selectedPawn.position.x == -700 || selectedPawn.position.x == -1000) && doRuszenia > 0) {
                                     // selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    clearInterval(this.interval);
+                                    document.getElementById("yourTurn").remove()
                                     this.animation(pos.x, pos.y, pos.z, selectedPawn)
                                     doRuszenia--
                                     selectedPawn.material.color = { r: 1, g: 0.6470588235294118, b: 0 }
@@ -240,6 +272,8 @@ class Game {
 
                                         console.log(object)
                                         // selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                        clearInterval(this.interval);
+                                        document.getElementById("yourTurn").remove()
                                         this.animation(pos.x, pos.y, pos.z, selectedPawn)
                                         selectedPawn.material.color = { r: 1, g: 0.6470588235294118, b: 0 }
                                         let positionsToMove = [pos.x, pos.y, pos.z]
@@ -312,6 +346,8 @@ class Game {
                             if ((selectedPawn.position.x == -700 || selectedPawn.position.x == -1000) && doRuszenia > 0) {
                                 if (game.board[pos_x][pos_y] == 0) {
                                     // selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    clearInterval(this.interval);
+                                    document.getElementById("yourTurn").remove()
                                     this.animation(pos.x, pos.y, pos.z, selectedPawn)
                                     doRuszenia--
                                     selectedPawn.material.color = { r: 0, g: 0.5019607843137255, b: 0 }
@@ -337,6 +373,8 @@ class Game {
 
                                     console.log(object)
                                     // selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    clearInterval(this.interval);
+                                    document.getElementById("yourTurn").remove()
                                     this.animation(pos.x, pos.y, pos.z, selectedPawn)
                                     selectedPawn.material.color = { r: 0, g: 0.5019607843137255, b: 0 }
                                     let positionsToMove = [pos.x, pos.y, pos.z]
