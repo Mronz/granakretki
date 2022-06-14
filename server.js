@@ -44,7 +44,7 @@ app.post("/ASK", (req, res) => {
         data = JSON.parse(data)
         let room = lobby[data.roomNumber];
         if (room.player1 != null && room.player2 != null) {
-            answear = { status: "start", board: room.board, turn: room.turn }
+            answear = { status: "start", board: room.board, turn: room.turn, player1: room.player1, player2: room.player2 }
         }
         else answear = { status: "wait" }
     })

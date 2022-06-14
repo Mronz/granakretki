@@ -68,7 +68,8 @@ class Net {
                 x++;
                 game.board = data.board
                 game.turn = data.turn
-
+                if (game.player == 1) game.enemy = data.player2
+                if (game.player == 2) game.enemy = data.player1
                 ui.changeStatus("Start")
                 game.start()
                 document.getElementById("waitingForEnemy").remove()
