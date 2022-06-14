@@ -336,7 +336,9 @@ class Game {
 
                                     net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
                                     selectedPawn = null;
-                                    this.checkWin();
+                                    let x = this.checkWin();
+
+
                                     net.waitingForTurn()
 
                                 }
@@ -463,9 +465,12 @@ class Game {
         }
         if (winner == 1) {
             console.log("wygrał 1");
+            return 1
         }
         else if (winner == 2) {
             console.log("wygrał 2");
+            return 2
         }
+        else return null
     }
 }
