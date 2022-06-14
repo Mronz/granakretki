@@ -107,10 +107,17 @@ class Game {
                 // console.log(pawnToMove)
                 // console.log(game.positions)
 
-                pawnToMove.position.set(game.positions[0], game.positions[1], game.positions[2]);
+                // pawnToMove.position.set(game.positions[0], game.positions[1], game.positions[2]);
+                this.animation(game.positions[0], game.positions[1], game.positions[2], pawnToMove)
             }
         }
 
+    }
+    animation = (x, y, z, co) => {
+        new TWEEN.Tween(co.position) // co
+            .to({ x: x, y: y, z: z }, 500) // do jakiej pozycji, w jakim czasie
+            .easing(TWEEN.Easing.Bounce.Out) // typ easingu (zmiana w czasie)
+            .start()
     }
 
     start = () => {
@@ -186,7 +193,8 @@ class Game {
                             if (game.board[pos_x][pos_y] == 0) {
 
                                 if ((selectedPawn.position.x == -700 || selectedPawn.position.x == -1000) && doRuszenia > 0) {
-                                    selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    // selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    this.animation(pos.x, pos.y, pos.z, selectedPawn)
                                     doRuszenia--
                                     selectedPawn.material.color = { r: 1, g: 0.6470588235294118, b: 0 }
                                     let positionsToMove = [pos.x, pos.y, pos.z]
@@ -200,12 +208,15 @@ class Game {
 
                                     net.waitingForTurn()
                                 } else if (doRuszenia == 0) {
-                                    if (selectedPawn.position.x == pos.x + 300 || selectedPawn.position.x == pos.x - 300 ||
-                                        selectedPawn.position.z == pos.z + 300 || selectedPawn.position.z == pos.z - 300
+                                    if ((selectedPawn.position.x == pos.x + 300 && selectedPawn.position.z == pos.z)
+                                        || (selectedPawn.position.x == pos.x - 300 && selectedPawn.position.z == pos.z)
+                                        || (selectedPawn.position.z == pos.z + 300 && selectedPawn.position.x == pos.x)
+                                        || (selectedPawn.position.z == pos.z - 300 && selectedPawn.position.x == pos.x)
                                     ) {
 
                                         console.log(object)
-                                        selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                        // selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                        this.animation(pos.x, pos.y, pos.z, selectedPawn)
                                         selectedPawn.material.color = { r: 1, g: 0.6470588235294118, b: 0 }
                                         let positionsToMove = [pos.x, pos.y, pos.z]
                                         game.board[pos_x][pos_y] = 1
@@ -274,7 +285,8 @@ class Game {
                             let pos_y = object.pos[2]
                             if ((selectedPawn.position.x == -700 || selectedPawn.position.x == -1000) && doRuszenia > 0) {
                                 if (game.board[pos_x][pos_y] == 0) {
-                                    selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    // selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    this.animation(pos.x, pos.y, pos.z, selectedPawn)
                                     doRuszenia--
                                     selectedPawn.material.color = { r: 0, g: 0.5019607843137255, b: 0 }
                                     game.board[pos_x][pos_y] = 2
@@ -290,12 +302,15 @@ class Game {
                                     net.waitingForTurn()
                                 }
                             } else if (doRuszenia == 0) {
-                                if (selectedPawn.position.x == pos.x + 300 || selectedPawn.position.x == pos.x - 300 ||
-                                    selectedPawn.position.z == pos.z + 300 || selectedPawn.position.z == pos.z - 300
+                                if ((selectedPawn.position.x == pos.x + 300 && selectedPawn.position.z == pos.z)
+                                    || (selectedPawn.position.x == pos.x - 300 && selectedPawn.position.z == pos.z)
+                                    || (selectedPawn.position.z == pos.z + 300 && selectedPawn.position.x == pos.x)
+                                    || (selectedPawn.position.z == pos.z - 300 && selectedPawn.position.x == pos.x)
                                 ) {
 
                                     console.log(object)
-                                    selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    // selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    this.animation(pos.x, pos.y, pos.z, selectedPawn)
                                     selectedPawn.material.color = { r: 0, g: 0.5019607843137255, b: 0 }
                                     let positionsToMove = [pos.x, pos.y, pos.z]
                                     game.board[pos_x][pos_y] = 2

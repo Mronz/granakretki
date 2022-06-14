@@ -36,6 +36,20 @@ class Net {
     // wysylanie zapytania sprawdzajacego czy jest dwch graczy w pokoju i czy mozna rozpoczac
     asking = async () => {
         let x = 0;
+
+        let div = document.createElement("div")
+        div.id = "waitingForEnemy"
+        div.innerHTML = "Waiting for Player 2..."
+        document.body.appendChild(div)
+
+        let loader = document.createElement("div")
+        loader.id = "loader"
+        div.appendChild(loader)
+
+        if (game.player == 1) {
+            
+        }
+
         while (x == 0) {
 
             // console.log("pytam");
@@ -58,6 +72,7 @@ class Net {
                 game.turn = data.turn
                 game.start()
                 ui.changeStatus("Start")
+                document.getElementById("waitingForEnemy").remove()
             }
             else ui.changeStatus("waiting")
         }
@@ -80,6 +95,28 @@ class Net {
     }
     waitingForTurn = async () => {
         let x = 0;
+
+        let div = document.createElement("div")
+        div.id = "waitingForTurn"
+        document.body.appendChild(div)
+
+        let p = document.createElement("p")
+        p.id = "timer"
+        p.innerHTML = "Twój przeciwnik ma ruch, zostało mu 60 [s];"
+        div.appendChild(p)
+        var countDownDate = Date.now() + 61000
+
+        var countDowning = setInterval(function () {
+            var now = Date.now();
+
+            var distance = countDownDate - now
+
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            p.innerHTML = `Twój przeciwnik ma ruch, zostało mu ${seconds}[s];`
+
+        })
+
         while (x == 0) {
             // console.log("czekom kurw");
             const data = JSON.stringify({ roomNumber: game.roomNumber, board: game.board, name: game.name, positions: game.positions })
@@ -92,6 +129,8 @@ class Net {
                 .then(data => {
                     // console.log(data);
                     if (data.status == "wait") {
+
+
                         // console.log("czekam");
                     } else if (data.status == "move") {
                         game.board = data.board
@@ -100,6 +139,8 @@ class Net {
                         game.positions = data.positions
                         game.enemyMove();
                         x++;
+                        clearInterval(countDowning)
+                        document.getElementById("waitingForTurn").remove()
                     }
                 }) // dane odpowiedzi z serwera
                 .catch(error => console.log(error));
