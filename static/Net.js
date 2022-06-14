@@ -38,7 +38,7 @@ class Net {
         let x = 0;
         while (x == 0) {
 
-            console.log("pytam");
+            // console.log("pytam");
             const data = JSON.stringify({ roomNumber: game.roomNumber })
             const options = {
                 method: "POST",
@@ -90,7 +90,7 @@ class Net {
             fetch("/ASK_TURN", options)
                 .then(response => response.json()) // konwersja na json
                 .then(data => {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == "wait") {
                         // console.log("czekam");
                     } else if (data.status == "move") {

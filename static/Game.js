@@ -29,7 +29,7 @@ class Game {
         this.scene.add(this.holder) // Dodanie podstawki
         this.pawns = []
         this.positions;
-
+        this.boradFields = []
         // tworzenie pol planszy
         for (let i = 0; i < 5; i++) {
             for (let j = 0; j < 5; j++) {
@@ -38,6 +38,7 @@ class Game {
                 this.plate.position.set(-400 + i * 300, 20, -400 + j * 300)
                 this.plate.pos = i + '_' + j
                 this.scene.add(this.plate) // Dodanie pola do planszy
+                this.boradFields.push(this.plate)
             }
 
         }
@@ -84,6 +85,7 @@ class Game {
                 this.pos_z = -1000
             }
             this.scene.add(this.winfield)
+
         }
 
         this.titlePage = new WinField(0, 0) // Ustawienie Dodatkowego bloka graficznego
@@ -92,6 +94,7 @@ class Game {
 
         this.x = 1 // Zmienne pomocnicze do animacji kamery
         this.y = 1800
+        this.naktorymstoi
         // this.kamera = setInterval(() => this.cameraAnimationInLobby(this.camera), 30) // xD, ale jestem zajebisty
         this.render() // wywołanie metody render
     }
@@ -101,8 +104,8 @@ class Game {
         for (let i = 0; i < game.pawns.length; i++) {
             if (game.pawns[i].helpingName == game.name) {
                 let pawnToMove = game.pawns[i]
-                console.log(pawnToMove)
-                console.log(game.positions)
+                // console.log(pawnToMove)
+                // console.log(game.positions)
 
                 pawnToMove.position.set(game.positions[0], game.positions[1], game.positions[2]);
             }
@@ -115,8 +118,13 @@ class Game {
             net.waitingForTurn()
         }
         let selectedPawn = null;
-        document.addEventListener("mousedown", (event) => {
+        var pom = 0
+        var kliekniete = [];
+        var doRuszenia = 4;
+        var pom2 = 0
+        var klikniete2 = []
 
+        document.addEventListener("mousedown", (event) => {
             this.mouseVector.x = (event.clientX / window.innerWidth) * 2 - 1;
             this.mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
             this.raycaster.setFromCamera(this.mouseVector, this.camera);
@@ -132,30 +140,87 @@ class Game {
                     if (this.player == 1) {
                         if (object.name == "orangePawn") {
                             selectedPawn = object
+                            console.log(selectedPawn)
+
+                            if ((object.position.x == -700 || object.position.x == -1000) && doRuszenia > 0) {
+                                if (pom == 0) {
+                                    selectedPawn.material.color = { r: 1, b: 0, g: 0 }
+                                    kliekniete.push(selectedPawn)
+                                } else if (pom >= 1) {
+
+                                    kliekniete[pom - 1].material.color = { r: 1, g: 0.6470588235294118, b: 0 }
+                                    selectedPawn.material.color = { r: 1, b: 0, g: 0 }
+                                    kliekniete.push(selectedPawn)
+                                }
+                                pom++
+                            } else if (doRuszenia == 0) {
+                                selectedPawn = object
+
+                                for (let i = 0; i < game.boradFields.length; i++) {
+                                    if (game.boradFields[i].position.x == selectedPawn.position.x &&
+                                        game.boradFields[i].position.z == selectedPawn.position.z
+                                    ) {
+                                        game.naktorymstoi = game.boradFields[i]
+                                        console.log(game.naktorymstoi)
+                                    }
+                                }
+                                if (pom2 == 0) {
+                                    selectedPawn.material.color = { r: 1, b: 0, g: 0 }
+                                    klikniete2.push(selectedPawn)
+                                } else if (pom2 >= 1) {
+
+                                    klikniete2[pom2 - 1].material.color = { r: 1, g: 0.6470588235294118, b: 0 }
+                                    selectedPawn.material.color = { r: 1, b: 0, g: 0 }
+                                    klikniete2.push(selectedPawn)
+                                }
+                                pom2++
+                            }
+
+
                         }
                         else if (object.name == "plate" && selectedPawn != null) {
                             let pos = object.position
-
-
                             let pos_x = object.pos[0]
                             let pos_y = object.pos[2]
 
                             if (game.board[pos_x][pos_y] == 0) {
-                                selectedPawn.position.set(pos.x, pos.y, pos.z);
 
-                                let positionsToMove = [pos.x, pos.y, pos.z]
+                                if ((selectedPawn.position.x == -700 || selectedPawn.position.x == -1000) && doRuszenia > 0) {
+                                    selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    doRuszenia--
+                                    selectedPawn.material.color = { r: 1, g: 0.6470588235294118, b: 0 }
+                                    let positionsToMove = [pos.x, pos.y, pos.z]
+                                    // console.log(noktorymstoi.pos)
+                                    game.board[pos_x][pos_y] = 1
+                                    // console.log(object);
+                                    // console.log(game.board);
+                                    net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
+                                    selectedPawn = null;
+                                    this.checkWin();
 
-                                game.board[pos_x][pos_y] = 1
+                                    net.waitingForTurn()
+                                } else if (doRuszenia == 0) {
+                                    if (selectedPawn.position.x == pos.x + 300 || selectedPawn.position.x == pos.x - 300 ||
+                                        selectedPawn.position.z == pos.z + 300 || selectedPawn.position.z == pos.z - 300
+                                    ) {
 
-                                // console.log(object);
-                                console.log(game.board);
+                                        console.log(object)
+                                        selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                        selectedPawn.material.color = { r: 1, g: 0.6470588235294118, b: 0 }
+                                        let positionsToMove = [pos.x, pos.y, pos.z]
+                                        game.board[pos_x][pos_y] = 1
+                                        console.log(game.naktorymstoi)
+                                        let pos1_x = game.naktorymstoi.pos[0]
+                                        let pos1_y = game.naktorymstoi.pos[2]
+                                        game.board[pos1_x][pos1_y] = 0
 
-                                net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
-                                selectedPawn = null;
+                                        net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
+                                        selectedPawn = null;
+                                        this.checkWin();
+                                        net.waitingForTurn()
 
-                                this.checkWin();
-
-                                net.waitingForTurn()
+                                    }
+                                }
                             }
 
 
@@ -165,6 +230,41 @@ class Game {
                     else {
                         if (object.name == "greenPawn") {
                             selectedPawn = object
+                            if ((object.position.x == -700 || object.position.x == -1000) && doRuszenia > 0) {
+                                if (pom == 0) {
+                                    console.log(selectedPawn.material.color)
+                                    selectedPawn.material.color = { r: 1, b: 0, g: 0 }
+                                    kliekniete.push(selectedPawn)
+                                } else if (pom >= 1) {
+                                    console.log(kliekniete)
+                                    kliekniete[pom - 1].material.color = { r: 0, g: 0.5019607843137255, b: 0 }
+                                    selectedPawn.material.color = { r: 1, b: 0, g: 0 }
+                                    kliekniete.push(selectedPawn)
+                                }
+                                pom++
+                            } else if (doRuszenia == 0) {
+
+                                selectedPawn = object
+
+                                for (let i = 0; i < game.boradFields.length; i++) {
+                                    if (game.boradFields[i].position.x == selectedPawn.position.x &&
+                                        game.boradFields[i].position.z == selectedPawn.position.z
+                                    ) {
+                                        game.naktorymstoi = game.boradFields[i]
+                                    }
+                                }
+                                if (pom2 == 0) {
+                                    selectedPawn.material.color = { r: 1, b: 0, g: 0 }
+                                    klikniete2.push(selectedPawn)
+                                } else if (pom2 >= 1) {
+
+                                    klikniete2[pom2 - 1].material.color = { r: 0, g: 0.5019607843137255, b: 0 }
+                                    selectedPawn.material.color = { r: 1, b: 0, g: 0 }
+                                    klikniete2.push(selectedPawn)
+                                }
+                                pom2++
+
+                            }
                         }
                         else if (object.name == "plate" && selectedPawn != null) {
                             let pos = object.position
@@ -172,22 +272,45 @@ class Game {
 
                             let pos_x = object.pos[0]
                             let pos_y = object.pos[2]
+                            if ((selectedPawn.position.x == -700 || selectedPawn.position.x == -1000) && doRuszenia > 0) {
+                                if (game.board[pos_x][pos_y] == 0) {
+                                    selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    doRuszenia--
+                                    selectedPawn.material.color = { r: 0, g: 0.5019607843137255, b: 0 }
+                                    game.board[pos_x][pos_y] = 2
+                                    let positionsToMove = [pos.x, pos.y, pos.z]
+                                    // console.log(object);
+                                    // console.log(game.board);
 
-                            if (game.board[pos_x][pos_y] == 0) {
-                                selectedPawn.position.set(pos.x, pos.y, pos.z);
-                                game.board[pos_x][pos_y] = 2
-                                let positionsToMove = [pos.x, pos.y, pos.z]
-                                // console.log(object);
-                                console.log(game.board);
+                                    net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
+                                    selectedPawn = null;
 
-                                net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
-                                selectedPawn = null;
+                                    this.checkWin();
 
-                                this.checkWin();
+                                    net.waitingForTurn()
+                                }
+                            } else if (doRuszenia == 0) {
+                                if (selectedPawn.position.x == pos.x + 300 || selectedPawn.position.x == pos.x - 300 ||
+                                    selectedPawn.position.z == pos.z + 300 || selectedPawn.position.z == pos.z - 300
+                                ) {
 
-                                net.waitingForTurn()
+                                    console.log(object)
+                                    selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                    selectedPawn.material.color = { r: 0, g: 0.5019607843137255, b: 0 }
+                                    let positionsToMove = [pos.x, pos.y, pos.z]
+                                    game.board[pos_x][pos_y] = 2
+
+                                    let pos1_x = game.naktorymstoi.pos[0]
+                                    let pos1_y = game.naktorymstoi.pos[2]
+                                    game.board[pos1_x][pos1_y] = 0
+
+                                    net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
+                                    selectedPawn = null;
+                                    this.checkWin();
+                                    net.waitingForTurn()
+
+                                }
                             }
-
                         }
                     }
                 }

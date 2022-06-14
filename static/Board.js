@@ -11,7 +11,7 @@ class Board extends THREE.Mesh {
             opacity: 1,
         })
 
-        material.map = new THREE.TextureLoader().load('./gfx/paperTexture.png')
+        material.map = new THREE.TextureLoader().load('./gfx/paperTexture_1.png')
         this.field = new THREE.Mesh(geometry, material);
         return this.field
     }
