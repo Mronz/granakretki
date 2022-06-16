@@ -3,8 +3,6 @@ let lobby = require("./static/serverModules")
 let app = express()
 const PORT = process.env.PORT || 3000;
 
-
-
 app.use(express.static('static'))
 
 app.post("/GET_ROOMS", (req, res) => {
@@ -114,7 +112,7 @@ app.post("/ASK_TURN", (req, res) => {
 
 
 app.listen(PORT, function () {
-    // console.log("start serwera na porcie " + PORT)
+    console.log("start serwera na porcie " + PORT)
 })
 
 
