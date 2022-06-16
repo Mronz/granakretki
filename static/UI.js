@@ -5,6 +5,7 @@ class Ui {
         this.nickInput()
         //this.resize();
         this.cameraScale();
+        this.x;
     }
     //Ustawianie kamery w zależności od rozmiaru okna
     cameraScale() {
@@ -20,6 +21,7 @@ class Ui {
         document.getElementById("root").append(header)
     }
     // okno z podaniem nazwy uzytkownika
+
     nickInput() {
         let loginWindow = document.createElement("div");
         loginWindow.id = "loginWindow";
@@ -42,9 +44,9 @@ class Ui {
         inp.onclick = async () => {
             game.username = document.getElementById("nick").value;
 
-            let x = setInterval(async () => {
+            this.x = setInterval(async () => {
                 await net.getRooms();
-                if (game.roomNumber != null) clearInterval(x);
+                if (game.roomNumber != null) clearInterval(this.x);
             }, 750);
 
         }
@@ -98,6 +100,7 @@ class Ui {
             td = document.createElement("td");
             let bt = document.createElement("button");
             bt.onclick = () => {
+                clearInterval(this.x)
                 net.enterRoom(i, game.username)
             }
             bt.innerText = "Dołącz";
