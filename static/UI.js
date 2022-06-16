@@ -42,11 +42,11 @@ class Ui {
         inp.onclick = async () => {
             game.username = document.getElementById("nick").value;
 
-            while (true) {
+            let x = setInterval(async () => {
                 await net.getRooms();
-                await new Promise(r => setTimeout(r, 500));
-                if (game.roomNumber != null) break;
-            }
+                if (game.roomNumber != null) clearInterval(x);
+            }, 750);
+
         }
         loginWindow.append(inp);
         document.getElementById("root").append(loginWindow);
