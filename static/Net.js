@@ -61,7 +61,7 @@ class Net {
                 .then(response => response.json()) // konwersja na json
                 .then(data => status(data)) // dane odpowiedzi z serwera
                 .catch(error => console.log(error));
-            await new Promise(r => setTimeout(r, 750));
+            await new Promise(r => setTimeout(r, 1000));
         }
         // sprawdzenie czy mozna rozpoczac gre
         function status(data) {
@@ -153,7 +153,7 @@ class Net {
                     }
                 }) // dane odpowiedzi z serwera
                 .catch(error => console.log(error));
-            await new Promise(r => setTimeout(r, 500));
+            await new Promise(r => setTimeout(r, 1000));
         }
     }
 }
