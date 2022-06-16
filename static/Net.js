@@ -36,7 +36,6 @@ class Net {
     // wysylanie zapytania sprawdzajacego czy jest dwch graczy w pokoju i czy mozna rozpoczac
     asking = async () => {
         if (document.getElementById("loginWindow")) document.getElementById("loginWindow").remove();
-        let x = 0;
 
         let div = document.createElement("div")
         div.id = "waitingForEnemy"
@@ -49,8 +48,7 @@ class Net {
 
 
 
-        while (x == 0) {
-
+        let x = setInterval(() => {
             // console.log("pytam");
             const data = JSON.stringify({ roomNumber: game.roomNumber })
             const options = {
@@ -59,24 +57,23 @@ class Net {
             };
             fetch("/ASK", options)
                 .then(response => response.json()) // konwersja na json
-                .then(data => status(data)) // dane odpowiedzi z serwera
+                .then(data => {
+                    if (data.status == "start") {
+
+                        game.board = data.board
+                        game.turn = data.turn
+                        if (game.player == 1) game.enemy = data.player2
+                        if (game.player == 2) game.enemy = data.player1
+                        ui.changeStatus("Start")
+                        game.start()
+                        clearInterval(x)
+                        document.getElementById("waitingForEnemy").remove()
+                    }
+                    else ui.changeStatus("waiting")
+                }) // dane odpowiedzi z serwera
                 .catch(error => console.log(error));
-            await new Promise(r => setTimeout(r, 1000));
-        }
-        // sprawdzenie czy mozna rozpoczac gre
-        function status(data) {
-            if (data.status == "start") {
-                x++;
-                game.board = data.board
-                game.turn = data.turn
-                if (game.player == 1) game.enemy = data.player2
-                if (game.player == 2) game.enemy = data.player1
-                ui.changeStatus("Start")
-                game.start()
-                document.getElementById("waitingForEnemy").remove()
-            }
-            else ui.changeStatus("waiting")
-        }
+
+        }, 500);
     }
     updateBoard = (num, board, name, positions) => {
         const data = JSON.stringify({ roomNumber: num, board: board, pawn: name, positions: positions })
@@ -95,8 +92,6 @@ class Net {
             .catch(error => console.log(error));
     }
     waitingForTurn = async () => {
-        let x = 0;
-
         let div = document.createElement("div")
         div.id = "waitingForTurn"
         document.body.appendChild(div)
@@ -118,7 +113,7 @@ class Net {
 
         })
 
-        while (x == 0) {
+        let x = setInterval(() => {
             const data = JSON.stringify({ roomNumber: game.roomNumber, board: game.board, name: game.name, positions: game.positions })
             const options = {
                 method: "POST",
@@ -143,7 +138,7 @@ class Net {
                         game.positions = data.positions
                         game.enemyMove();
                         game.jebanaFunkcja();
-                        x++;
+                        clearInterval(x)
                         clearInterval(countDowning)
                         if (document.getElementById("waitingForTurn")) document.getElementById("waitingForTurn").remove()
                         console.log("move");
@@ -151,6 +146,6 @@ class Net {
                 }) // dane odpowiedzi z serwera
                 .catch(error => console.log(error));
             await new Promise(r => setTimeout(r, 1000));
-        }
+        }, 500);
     }
 }

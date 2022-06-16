@@ -396,26 +396,10 @@ class Game {
                     }
                 }
 
-            } else if (this.turn != this.player) {
-                // net.waitingForTurn()
             }
         }
 
     }
-
-
-
-    updatePawns = () => {
-        for (let i = 0; i < 5; i++) {
-            for (let j = 0; j < 5; j++) {
-                if (game.board == 1) {
-                    //setposioosn
-                }
-            }
-
-        }
-    }
-
 
     cameraAnimationInLobby = (camera) => { // Obracanie w elipsie
         let kat = game.x * (Math.PI / 180);
