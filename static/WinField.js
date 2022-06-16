@@ -13,7 +13,7 @@ class WinField extends THREE.Mesh {
         if (pom == 10) {
             material.map = new THREE.TextureLoader().load(`./gfx/winningPositions/winPosition_${this.x}.png`)
         } else {
-            material.map = new THREE.TextureLoader().load(`./gfx/titlePage.png`)
+            material.map = new THREE.TextureLoader().load(`./gfx/titlePage1.png`)
         }
 
         this.field = new THREE.Mesh(geometry, material);
