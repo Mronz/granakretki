@@ -9,7 +9,7 @@
     "start": "node server.js"
   },
   "name": "granakretki",
-  "description": "wstepnie jakis interfejs stworzylem nie dziala nic narazie\r wrzucilem ci do game.js ten podstawowy renderer itp\r to okno logowania jest \"aboslute\" wiec nie powinno ci kolidowac przy robieniu planszy",
+  "description": "opis",
   "version": "1.0.0",
   "main": "server.js",
   "devDependencies": {},
