@@ -340,11 +340,10 @@ class Game {
                         else if (object.name == "plate" && selectedPawn != null) {
                             let pos = object.position
 
-
                             let pos_x = object.pos[0]
                             let pos_y = object.pos[2]
-                            if ((selectedPawn.position.x == -700 || selectedPawn.position.x == -1000) && doRuszenia > 0) {
-                                if (game.board[pos_x][pos_y] == 0) {
+                            if (game.board[pos_x][pos_y] == 0) {
+                                if ((selectedPawn.position.x == -700 || selectedPawn.position.x == -1000) && doRuszenia > 0) {
                                     // selectedPawn.position.set(pos.x, pos.y, pos.z);
                                     clearInterval(this.interval);
                                     document.getElementById("yourTurn").remove()
@@ -363,34 +362,34 @@ class Game {
                                     if (x != null) {
                                         ui.changeStatus("Wygrałeś na tego frajera!")
                                     } else net.waitingForTurn()
-                                }
-                            } else if (doRuszenia == 0) {
-                                if ((selectedPawn.position.x == pos.x + 300 && selectedPawn.position.z == pos.z)
-                                    || (selectedPawn.position.x == pos.x - 300 && selectedPawn.position.z == pos.z)
-                                    || (selectedPawn.position.z == pos.z + 300 && selectedPawn.position.x == pos.x)
-                                    || (selectedPawn.position.z == pos.z - 300 && selectedPawn.position.x == pos.x)
-                                ) {
+                                } else if (doRuszenia == 0) {
+                                    if ((selectedPawn.position.x == pos.x + 300 && selectedPawn.position.z == pos.z)
+                                        || (selectedPawn.position.x == pos.x - 300 && selectedPawn.position.z == pos.z)
+                                        || (selectedPawn.position.z == pos.z + 300 && selectedPawn.position.x == pos.x)
+                                        || (selectedPawn.position.z == pos.z - 300 && selectedPawn.position.x == pos.x)
+                                    ) {
 
-                                    // console.log(object)
-                                    // selectedPawn.position.set(pos.x, pos.y, pos.z);
-                                    clearInterval(this.interval);
-                                    document.getElementById("yourTurn").remove()
-                                    this.animation(pos.x, pos.y, pos.z, selectedPawn)
-                                    selectedPawn.material.color = { r: 0, g: 0.5019607843137255, b: 0 }
-                                    let positionsToMove = [pos.x, pos.y, pos.z]
-                                    game.board[pos_x][pos_y] = 2
+                                        // console.log(object)
+                                        // selectedPawn.position.set(pos.x, pos.y, pos.z);
+                                        clearInterval(this.interval);
+                                        document.getElementById("yourTurn").remove()
+                                        this.animation(pos.x, pos.y, pos.z, selectedPawn)
+                                        selectedPawn.material.color = { r: 0, g: 0.5019607843137255, b: 0 }
+                                        let positionsToMove = [pos.x, pos.y, pos.z]
+                                        game.board[pos_x][pos_y] = 2
 
-                                    let pos1_x = game.naktorymstoi.pos[0]
-                                    let pos1_y = game.naktorymstoi.pos[2]
-                                    game.board[pos1_x][pos1_y] = 0
+                                        let pos1_x = game.naktorymstoi.pos[0]
+                                        let pos1_y = game.naktorymstoi.pos[2]
+                                        game.board[pos1_x][pos1_y] = 0
 
-                                    net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
-                                    selectedPawn = null;
-                                    let x = this.checkWin();
-                                    if (x != null) {
-                                        ui.changeStatus("Wygrałeś na tego frajera!")
-                                    } else net.waitingForTurn()
+                                        net.updateBoard(this.roomNumber, this.board, selectedPawn.helpingName, positionsToMove)
+                                        selectedPawn = null;
+                                        let x = this.checkWin();
+                                        if (x != null) {
+                                            ui.changeStatus("Wygrałeś na tego frajera!")
+                                        } else net.waitingForTurn()
 
+                                    }
                                 }
                             }
                         }
