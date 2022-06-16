@@ -145,7 +145,6 @@ class Net {
                     }
                 }) // dane odpowiedzi z serwera
                 .catch(error => console.log(error));
-            await new Promise(r => setTimeout(r, 1000));
         }, 500);
     }
 }
