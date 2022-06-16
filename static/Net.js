@@ -88,7 +88,7 @@ class Net {
                 game.board = data.board;
                 game.name = data.name;
                 game.positions = data.positions;
-            }) // dane odpowiedzi z serwera
+            }) // ddne odpowiedzi z serwera
             .catch(error => console.log(error));
     }
     waitingForTurn = async () => {
